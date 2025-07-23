@@ -1,14 +1,41 @@
 import { useState, useEffect } from "react";
 import Scene3D from "../3d/Scene3D";
+import Fallback2DScene from "./Fallback2DScene";
 import GenesisButton from "../ui/GenesisButton";
 import { ChevronDown, Users, Zap, Globe } from "lucide-react";
 
 const HeroSection = () => {
   const [mounted, setMounted] = useState(false);
+  const [use3D, setUse3D] = useState(true);
+  const [sceneError, setSceneError] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    
+    // Error boundary for 3D scene
+    const handleError = () => {
+      console.log("3D Scene failed, falling back to 2D");
+      setSceneError(true);
+      setUse3D(false);
+    };
+
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
   }, []);
+
+  const Scene = () => {
+    if (sceneError || !use3D) {
+      return <Fallback2DScene />;
+    }
+    
+    try {
+      return <Scene3D />;
+    } catch (error) {
+      console.log("3D rendering error, using fallback:", error);
+      setSceneError(true);
+      return <Fallback2DScene />;
+    }
+  };
 
   const scrollToContent = () => {
     window.scrollTo({
@@ -19,8 +46,8 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-gradient-hero">
-      {/* 3D Scene Background */}
-      <Scene3D />
+      {/* 3D Scene Background with Fallback */}
+      <Scene />
       
       {/* Overlay Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background/60 pointer-events-none" />
