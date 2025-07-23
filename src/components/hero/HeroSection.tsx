@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import Scene3D from "../3d/Scene3D";
 import Fallback2DScene from "./Fallback2DScene";
 import GenesisButton from "../ui/GenesisButton";
+import { useSmoothScroll } from "../../hooks/useSmoothScroll";
 import { ChevronDown, Users, Zap, Globe } from "lucide-react";
 
 const HeroSection = () => {
   const [mounted, setMounted] = useState(false);
   const [use3D, setUse3D] = useState(true);
   const [sceneError, setSceneError] = useState(false);
+  const { scrollToSection } = useSmoothScroll();
 
   useEffect(() => {
     setMounted(true);
@@ -38,10 +40,7 @@ const HeroSection = () => {
   };
 
   const scrollToContent = () => {
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: "smooth"
-    });
+    scrollToSection('about');
   };
 
   return (
@@ -69,15 +68,30 @@ const HeroSection = () => {
             </div>
             
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#community" className="text-foreground/80 hover:text-primary transition-colors">
-                Community
-              </a>
-              <a href="#features" className="text-foreground/80 hover:text-primary transition-colors">
-                Features
-              </a>
-              <a href="#about" className="text-foreground/80 hover:text-primary transition-colors">
+              <button 
+                onClick={() => scrollToSection('about')}
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
                 About
-              </a>
+              </button>
+              <button 
+                onClick={() => scrollToSection('team')}
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
+                Team
+              </button>
+              <button 
+                onClick={() => scrollToSection('events')}
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
+                Events
+              </button>
+              <button 
+                onClick={() => scrollToSection('sponsor')}
+                className="text-foreground/80 hover:text-primary transition-colors"
+              >
+                Sponsor
+              </button>
               <GenesisButton variant="secondary" size="sm">
                 Join Now
               </GenesisButton>
@@ -133,7 +147,12 @@ const HeroSection = () => {
                   <Users className="w-5 h-5 mr-2" />
                   Join Genesis
                 </GenesisButton>
-                <GenesisButton variant="ghost" size="lg" className="w-full sm:w-auto">
+                <GenesisButton 
+                  variant="ghost" 
+                  size="lg" 
+                  className="w-full sm:w-auto"
+                  onClick={() => scrollToSection('about')}
+                >
                   <Globe className="w-5 h-5 mr-2" />
                   Explore Features
                 </GenesisButton>
