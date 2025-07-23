@@ -1,12 +1,19 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import HeroSection from "../components/hero/HeroSection";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <HeroSection />
+      
+      {/* Additional Content Sections */}
+      <section id="community" className="min-h-screen bg-card flex items-center justify-center p-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-6 text-foreground">Our Community</h2>
+          <p className="text-xl text-muted-foreground">
+            Connect with like-minded innovators and build the future together.
+          </p>
+        </div>
+      </section>
     </div>
   );
 };
