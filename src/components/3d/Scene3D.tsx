@@ -21,17 +21,18 @@ const Scene3D = () => {
           powerPreference: "high-performance"
         }}
         dpr={[1, 2]}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0);
+        }}
       >
         <Suspense fallback={null}>
           {/* Lighting */}
-          <ambientLight intensity={0.3} />
-          <pointLight position={[10, 10, 10]} intensity={1} color="#8b5cf6" />
-          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#a855f7" />
-          <spotLight
-            position={[0, 10, 0]}
-            angle={0.3}
-            penumbra={1}
-            intensity={1}
+          <ambientLight intensity={0.4} />
+          <pointLight position={[10, 10, 10]} intensity={0.8} color="#8b5cf6" />
+          <pointLight position={[-10, -10, -10]} intensity={0.4} color="#a855f7" />
+          <directionalLight
+            position={[5, 5, 5]}
+            intensity={0.6}
             color="#c084fc"
             castShadow
           />

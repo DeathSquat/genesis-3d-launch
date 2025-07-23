@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Torus, MeshDistortMaterial, useTexture } from "@react-three/drei";
+import { Torus } from "@react-three/drei";
 import * as THREE from "three";
 
 const GenesisLogo3D = () => {
@@ -29,10 +29,8 @@ const GenesisLogo3D = () => {
         position={[-0.8, 0.8, 0]}
         rotation={[Math.PI / 4, 0, 0]}
       >
-        <MeshDistortMaterial
+        <meshStandardMaterial
           color="#8b5cf6"
-          distort={0.1}
-          speed={1}
           roughness={0.1}
           metalness={0.9}
           emissive="#4c1d95"
@@ -47,10 +45,8 @@ const GenesisLogo3D = () => {
         position={[0.8, -0.8, 0]}
         rotation={[-Math.PI / 4, 0, Math.PI / 2]}
       >
-        <MeshDistortMaterial
+        <meshStandardMaterial
           color="#a855f7"
-          distort={0.15}
-          speed={1.5}
           roughness={0.1}
           metalness={0.8}
           emissive="#7c3aed"
@@ -64,10 +60,8 @@ const GenesisLogo3D = () => {
         position={[0, 0, 0]}
         rotation={[0, Math.PI / 4, 0]}
       >
-        <MeshDistortMaterial
+        <meshStandardMaterial
           color="#c084fc"
-          distort={0.2}
-          speed={2}
           roughness={0}
           metalness={1}
           emissive="#8b5cf6"

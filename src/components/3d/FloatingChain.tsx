@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Torus, MeshDistortMaterial } from "@react-three/drei";
+import { Torus } from "@react-three/drei";
 import * as THREE from "three";
 
 interface FloatingChainProps {
@@ -11,7 +11,7 @@ interface FloatingChainProps {
 
 const FloatingChain = ({ position, scale = 1, speed = 1 }: FloatingChainProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const materialRef = useRef<any>(null);
+  const mesh2Ref = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -20,30 +20,29 @@ const FloatingChain = ({ position, scale = 1, speed = 1 }: FloatingChainProps) =
       meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * speed * 0.5) * 0.3;
     }
     
-    if (materialRef.current) {
-      materialRef.current.distort = 0.1 + Math.sin(state.clock.elapsedTime * 2) * 0.05;
+    if (mesh2Ref.current) {
+      mesh2Ref.current.rotation.z += 0.005 * speed;
     }
   });
 
   return (
     <group position={position}>
       <Torus ref={meshRef} args={[1, 0.3, 16, 32]} scale={scale}>
-        <MeshDistortMaterial
-          ref={materialRef}
+        <meshStandardMaterial
           color="#8b5cf6"
-          distort={0.1}
-          speed={2}
-          roughness={0}
+          roughness={0.1}
           metalness={0.8}
+          emissive="#4c1d95"
+          emissiveIntensity={0.2}
         />
       </Torus>
-      <Torus args={[1, 0.3, 16, 32]} scale={scale} position={[1.5, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
-        <MeshDistortMaterial
+      <Torus ref={mesh2Ref} args={[1, 0.3, 16, 32]} scale={scale} position={[1.5, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+        <meshStandardMaterial
           color="#a855f7"
-          distort={0.15}
-          speed={1.5}
-          roughness={0}
+          roughness={0.1}
           metalness={0.9}
+          emissive="#7c3aed"
+          emissiveIntensity={0.3}
         />
       </Torus>
     </group>
